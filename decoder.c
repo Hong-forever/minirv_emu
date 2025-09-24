@@ -1,7 +1,7 @@
 #include "defines.h"
 
 void dec(int inst, int *rd, int *rs1, int *rs2, 
-         int *imm_use, int *imm, IMM_TYPE *imm_type, ALU_OP *alu_op, int *rd_we, 
+         int *imm_use, IMM_TYPE *imm_type, ALU_OP *alu_op, int *rd_we, 
          int *jump_flag, int *ls_read, int *ls_write, int *ls_type)
 {
     dec_t dec;
@@ -22,7 +22,6 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
             switch (dec.funct3) {
                 case 0: // addi
                     *imm_use = 1;
-                    *imm = extract_imm_i(inst);
                     *alu_op = addi_op;
                     *rd_we = 1;
                     *imm_type = imm_i;
@@ -41,9 +40,14 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
                     break;
             }
             break;
+        case 55:  //lui  
+            *alu_op = lui_op;
+            *rd_we = 1;
+            *imm_use = 1;
+            *imm_type = imm_u;
+            break;
         case 103:  //jalr
             *imm_use = 1;
-            *imm = extract_imm_i(inst);
             *alu_op = jalr_op;
             *rd_we = 1;
             *imm_type = imm_i;

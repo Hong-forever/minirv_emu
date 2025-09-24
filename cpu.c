@@ -37,7 +37,7 @@ void cpu(int rst)
     printf("pc = %x, inst = %x\n", pc, inst);
     printf("end-------------------------------\n");
 
-    dec(inst, &rd, &rs1, &rs2, &imm_use, &imm, &imm_type, &alu_op, &rd_we, &jump_flag, &ls_read, &ls_write, &ls_type);
+    dec(inst, &rd, &rs1, &rs2, &imm_use, &imm_type, &alu_op, &rd_we, &jump_flag, &ls_read, &ls_write, &ls_type);
 
     printf("id_stage:-------------------------\n");
     printf("rd = %d, rd_we = %d, alu_op = %d, imm_use = %d\n", rd, rd_we, alu_op, imm_use);

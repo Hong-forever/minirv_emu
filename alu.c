@@ -23,6 +23,10 @@ void alu(int rs1_rdata, int rs2_rdata, int imm_use, int imm, int pc, int *jump_a
             *rd_wdata = alu_a + alu_b;
             break;
 
+        case lui_op: //lui
+            alu_a = imm;
+            *rd_wdata = alu_a;
+
         default:
             break;
     }

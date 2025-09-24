@@ -1,12 +1,13 @@
 #include "defines.h"
 
-#define INST_NUM 2
+#define INST_NUM 4 
 int main(int argc, char *argv[])
 {
     int rst = 0;
 
-    for(int i=0; i<INST_NUM+1; i++)
+    for(int i=0; i<INST_NUM; i++)
     {
+        printf("\ninst %d: \n", i);
         cpu(rst);
     }
 
