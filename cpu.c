@@ -12,7 +12,8 @@ void cpu(int rst)
     int rs2 = 0;
     int imm_use = 0;
     int imm = 0;
-    int alu_op = 0;
+    IMM_TYPE imm_type = 0;
+    ALU_OP alu_op = 0;
     int rd_we = 0;
     int ls_read = 0;
     int ls_write = 0;
@@ -34,13 +35,26 @@ void cpu(int rst)
 
     printf("pc = %x, inst = %x\n", pc, inst);
 
-    dec(inst, &rd, &rs1, &rs2, &imm_use, &imm, &alu_op, &rd_we, &jump_flag, &ls_read, &ls_write, &ls_type);
+    dec(inst, &rd, &rs1, &rs2, &imm_use, &imm, &imm_type, &alu_op, &rd_we, &jump_flag, &ls_read, &ls_write, &ls_type);
+
+    printf("rd = %d, rd_we = %d,\
+            alu_op = %d, imm_use = %d\
+            \n", rd, rd_we, alu_op, imm_use);
 
     gpr(0, 0, 0, rs1, rs2, &rs1_rdata, &rs2_rdata);
 
-    alu(rs1_rdata, rs2_rdata, alu_op, &rd_wdata);
+    printf("rs1 = %d rs1_rdata = %x\n", rs1, rs1_rdata);
+
+    printf("rs2 = %d rs2_rdata = %x\n", rs2, rs2_rdata);
+
+    imm = imm_func(inst, imm_type);        
+    alu(rs1_rdata, rs2_rdata, imm_use, imm, alu_op, &rd_wdata);
+
+    printf("rd = %d, rd_we = %d, rd_wdata = %x\n", rd, rd_we, rd_wdata);
 
     dbus_rdata = ram(dbus_addr, 0, 0, 0);
+
+    printf("dbus_rdata = %x\n", dbus_rdata);
 
     lsu(ls_type, ls_addr, dbus_rdata, &dbus_data_rd, &dbus_mask);
     
