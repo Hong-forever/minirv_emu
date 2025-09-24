@@ -18,7 +18,7 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
     *rs2 = dec.rs2;
 
     switch (dec.opcode) {
-        case 19:
+        case 19:  //i type
             switch (dec.funct3) {
                 case 0: // addi
                     *imm_use = 1;
@@ -31,6 +31,25 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
                     break;
             }
             break;
+        case 51:
+            switch (dec.funct3) {
+                case 0: //add
+                    *alu_op = add_op;
+                    *rd_we = 1;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 103:  //jalr
+            *imm_use = 1;
+            *imm = extract_imm_i(inst);
+            *alu_op = jalr_op;
+            *rd_we = 1;
+            *imm_type = imm_i;
+            *jump_flag = 1;
+            break;
+
         default:
             break;
     }

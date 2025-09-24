@@ -15,9 +15,6 @@ int pc_reg(int rst, int jump_flag, int jump_addr)
         pc = pc + 4;
     }
 
-#if DEBUG
-    printf("PC_REG = %d\n", pc); // DEBUG
-#endif
 
     return pc;
 }
