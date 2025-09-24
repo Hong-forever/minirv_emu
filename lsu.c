@@ -27,7 +27,7 @@ void lsu(int ls_type, int ls_addr, int ls_rdata,
                     break;
             }
             *dbus_data_rd = ls_rdata & *dbus_mask >> (shift_amount * 8);
-    
+            break; 
         case 2: // sb
             switch(shift_amount) {
                 case 0:
@@ -46,7 +46,7 @@ void lsu(int ls_type, int ls_addr, int ls_rdata,
                     *dbus_mask = 0;
                     break;
             }
-
+            break;
         case 3: // sw
             *dbus_mask = 0xFFFFFFFF;
             break;

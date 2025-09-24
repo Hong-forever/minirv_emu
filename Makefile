@@ -11,7 +11,7 @@ SRC_DIR = .
 
 # 源文件列表（自动查找所有.c文件）
 SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(SRCS: .c=.o)
+OBJS = $(SRCS:.c=.o)
 
 # 默认目标
 all: $(TARGET)
