@@ -17,8 +17,6 @@ void gpr(int waddr, int wen, int wdata, int raddr1, int raddr2, int *rdata1, int
         reg[waddr] = wdata;
 
 #ifdef DEBUG
-        printf("GPR[%d], %s : write %x\n", waddr, reg_name[waddr], wdata); // DEBUG
-
         for(int i = 0; i < GPR_NUM; i++)
         {
             printf("reg[%d], %s = %x\n", i, reg_name[i], reg[i]); // DEBUG

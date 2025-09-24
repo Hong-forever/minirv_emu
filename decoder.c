@@ -2,7 +2,7 @@
 
 void dec(int inst, int *rd, int *rs1, int *rs2, 
          int *imm_use, IMM_TYPE *imm_type, ALU_OP *alu_op, int *rd_we, 
-         int *jump_flag, int *ls_read, int *ls_write, int *ls_type)
+         int *jump_flag, int *ls_read, int *ls_write, LS_TYPE *ls_type)
 {
     dec_t dec;
     dec.opcode = (inst) & 0x7F;
@@ -30,7 +30,7 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
                     break;
             }
             break;
-        case 51:
+        case 51: //r type
             switch (dec.funct3) {
                 case 0: //add
                     *alu_op = add_op;
@@ -53,7 +53,43 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
             *imm_type = imm_i;
             *jump_flag = 1;
             break;
-
+        case 3:  //load
+            switch (dec.funct3) {
+                case 2: //lw
+                    *imm_use = 1;
+                    *imm_type = imm_i;
+                    *rd_we = 1;
+                    *ls_read = 1;
+                    *ls_type = lw_type;
+                    break;
+                case 4: //lbu
+                    *imm_use = 1;
+                    *imm_type = imm_i;
+                    *rd_we = 1;
+                    *ls_read = 1;
+                    *ls_type = lbu_type;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 35:  //store
+            switch (dec.funct3) {
+                case 0: //sb
+                    *imm_use = 1;
+                    *imm_type = imm_s;
+                    *ls_write = 1;
+                    *ls_type = sb_type;
+                    break;
+                case 2: //sw
+                    *imm_use = 1;
+                    *imm_type = imm_s;
+                    *ls_write = 1;
+                    *ls_type = sw_type;
+                    break;
+                default:
+                    break;
+            }
         default:
             break;
     }

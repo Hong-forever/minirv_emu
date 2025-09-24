@@ -1,6 +1,6 @@
 #include "defines.h"
 
-void alu(int rs1_rdata, int rs2_rdata, int imm_use, int imm, int pc, int *jump_addr, ALU_OP alu_op, int *rd_wdata)
+void alu(int rs1_rdata, int rs2_rdata, int imm_use, int imm, int pc, int *memory_addr, int *jump_addr, ALU_OP alu_op, int *rd_wdata)
 {
     int alu_a, alu_b;
     switch (alu_op) {
@@ -30,5 +30,6 @@ void alu(int rs1_rdata, int rs2_rdata, int imm_use, int imm, int pc, int *jump_a
         default:
             break;
     }
+    *memory_addr = rs1_rdata + imm;
 }
 

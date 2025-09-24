@@ -1,6 +1,6 @@
 #include "defines.h"
 
-#define INST_NUM 4 
+#define INST_NUM 8
 int main(int argc, char *argv[])
 {
     int rst = 0;
