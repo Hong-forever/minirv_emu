@@ -2,7 +2,7 @@
 
 void dec(int inst, int *rd, int *rs1, int *rs2, 
          int *imm_use, IMM_TYPE *imm_type, ALU_OP *alu_op, int *rd_we, 
-         int *jump_flag, int *ls_read, int *ls_write, LS_TYPE *ls_type)
+         int *jump_flag, int *ls_read, int *ls_write, LS_TYPE *ls_type, int *dbg)
 {
     dec_t dec;
     dec.opcode = (inst) & 0x7F;
@@ -93,5 +93,8 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
         default:
             break;
     }
+
+    if(inst == 0x00100073)
+        *dbg = 1;
 }
 

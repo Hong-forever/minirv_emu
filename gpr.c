@@ -11,15 +11,15 @@ static const char *reg_name[GPR_NUM] =
 
 static int reg[GPR_NUM] = {0};
 
-void gpr(int waddr, int wen, int wdata, int raddr1, int raddr2, int *rdata1, int *rdata2)
+void gpr(int waddr, int wen, int wdata, int raddr1, int raddr2, int *rdata1, int *rdata2, int dbg)
 {
     if(wen && waddr != 0 && waddr < GPR_NUM) {
         reg[waddr] = wdata;
 
-#ifdef DEBUG
+#if DEBUG
         for(int i = 0; i < GPR_NUM; i++)
         {
-            printf("reg[%d], %s = %x\n", i, reg_name[i], reg[i]); // DEBUG
+            printf("reg[%d], %s = %08x\n", i, reg_name[i], reg[i]); // DEBUG
         }
 #endif
 
@@ -43,5 +43,11 @@ void gpr(int waddr, int wen, int wdata, int raddr1, int raddr2, int *rdata1, int
     }
     else {
         printf("Error: Read address out of range\n");
+    }
+    if(dbg) {
+        if(reg[10] == 0)
+            printf("TEST PASS!\n");
+        else
+            printf("FAIL!\n");
     }
 }

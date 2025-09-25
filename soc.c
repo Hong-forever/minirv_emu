@@ -1,14 +1,15 @@
 #include "defines.h"
-
-#define INST_NUM 8
+#include <unistd.h>
 int main(int argc, char *argv[])
 {
     int rst = 0;
+    int dbg = 0;
 
-    for(int i=0; i<INST_NUM; i++)
+    while(1)
     {
-        printf("\ninst %d: \n", i);
-        cpu(rst);
+        cpu(rst, &dbg);
+//        sleep(1);
+        if(dbg) break;
     }
 
     return 0;

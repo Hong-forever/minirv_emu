@@ -1,17 +1,20 @@
 #include "defines.h"
 
-static int rom_mem[ROM_DEPTH] = {
-0x980650b7,
-0x72308093,
-0x00100023,
-0x00100123,
-0x00102223,
-0x00004183,
-0x00404203,
-0x00402283
-};
-
 int rom(int addr)
 {
+    static int rom_mem[ROM_DEPTH] = {0};
+    
+    if(rom_mem[0] == 0) {
+        FILE *file = fopen("inst.data", "r");
+        if(file == NULL) printf("Error read\n");
+
+
+        int count = 0;
+
+        while(fscanf(file, "%x", &rom_mem[count]) == 1 && count < ROM_DEPTH)
+        count++;
+
+        fclose(file);
+    }
     return rom_mem[addr >> 2];
 }

@@ -1,9 +1,21 @@
 #include "defines.h"
 
-static int ram_mem[RAM_DEPTH] = {0};
-
 int ram(int addr, int wdata, int we, int mask)
 {
+
+    static int ram_mem[RAM_DEPTH] = {0};
+    if(ram_mem[0] == 0){
+        FILE *file = fopen("inst.data", "r");
+        if(file == NULL) printf("Error read\n");
+    
+    
+        int count = 0;
+    
+        while(fscanf(file, "%x", &ram_mem[count]) == 1 && count < RAM_DEPTH)
+            count++;
+    
+        fclose(file);
+    }
     if(we) {
         ram_mem[addr >> 2] = (wdata & mask) | (ram_mem[addr >> 2] & ~mask);
 #if DEBUG
