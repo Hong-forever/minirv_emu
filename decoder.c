@@ -94,6 +94,7 @@ void dec(int inst, int *rd, int *rs1, int *rs2,
             break;
     }
 
+    if(*jump_flag == 1) printf("\n========\njalr!\n=======\n");
     if(inst == 0x00100073)
         *dbg = 1;
 }

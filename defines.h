@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define GPR_NUM 32
 
@@ -53,7 +53,7 @@ int imm_func(int inst, IMM_TYPE imm_type);
 
 void alu(int rs1_rdata, int rs2_rdata, int imm_use, int imm, int pc, int *memory_addr, int *jump_addr, ALU_OP alu_op, int *rd_wdata);
 
-void lsu(LS_TYPE ls_type, int ls_addr, int ls_rdata, int *dbus_data_rd, int *dbus_mask);
+void lsu(LS_TYPE ls_type, int ls_addr, int ls_rdata, int *ls_wdata, int *dbus_data_rd, int *dbus_mask);
 
 void cpu(int rst, int *dbg);
 #endif

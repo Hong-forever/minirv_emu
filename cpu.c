@@ -74,12 +74,13 @@ void cpu(int rst, int *dbg)
 #if DEBUG
     printf("ls_stage:-------------------------\n");
     printf("dbus_rdata = %08x\n", dbus_rdata);
+    printf("dbus_addr = %08x\n", ls_addr);
     printf("end-------------------------------\n");
 #endif
 
-    lsu(ls_type, ls_addr, dbus_rdata, &dbus_data_rd, &dbus_mask);
-    
     dbus_wdata = rs2_rdata;
+    lsu(ls_type, ls_addr, dbus_rdata, &dbus_wdata, &dbus_data_rd, &dbus_mask);
+    
     dbus_we = ls_write;
     dbus_addr = ls_addr;
 
