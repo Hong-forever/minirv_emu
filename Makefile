@@ -11,7 +11,9 @@ SRC_DIR = .
 
 # 源文件列表（自动查找所有.c文件）
 SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(SRCS:.c=.o)
+OBJS = $(SRCS:%.c=build/%.o)
+
+$(shell mkdir -p build)
 
 # 默认目标
 all: $(TARGET)
@@ -21,12 +23,12 @@ $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 # 编译每个.c文件为.o文件
-%.o: %.c
+build/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # 清理生成的文件
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf build/ $(TARGET)
 
 # 声明伪目标
 .PHONY: all clean 
