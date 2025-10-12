@@ -3,12 +3,17 @@
 
 #include <stdio.h>
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define GPR_NUM 32
 
 #define ROM_DEPTH 2097152
 #define RAM_DEPTH 2097152
+
+#define MEM 1
+#define SUM 2
+#define VGA 3
+#define MODE 1
 
 typedef enum {
     imm_i, imm_s, imm_b, imm_u, imm_j
