@@ -1,13 +1,6 @@
 #include "defines.h"
 
 
-static const char *reg_name[GPR_NUM] = 
-{
-    "zero", "ra", "sp", "gp", "tp", "t0", "t1", "t2", 
-    "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5", 
-    "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7", 
-    "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
-};
 
 static int reg[GPR_NUM] = {0};
 
@@ -17,6 +10,14 @@ void gpr(int waddr, int wen, int wdata, int raddr1, int raddr2, int *rdata1, int
         reg[waddr] = wdata;
 
 #if DEBUG
+
+    static const char *reg_name[GPR_NUM] = 
+    {
+        "zero", "ra", "sp", "gp", "tp", "t0", "t1", "t2", 
+        "s0", "s1", "a0", "a1", "a2", "a3", "a4", "a5", 
+        "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7", 
+        "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
+    };
         for(int i = 0; i < GPR_NUM; i++)
         {
             printf("reg[%d], %s = %08x\n", i, reg_name[i], reg[i]); // DEBUG

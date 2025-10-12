@@ -1,7 +1,7 @@
 #include "defines.h"
 
 
-void cpu(int rst, int *dbg)
+void cpu(int rst, int *dbg, int *vga_mem)
 {
     int pc = 0;
     int inst = 0;
@@ -25,10 +25,19 @@ void cpu(int rst, int *dbg)
     int rd_wdata = 0;
     int dbus_data_rd = 0;
     int dbus_mask = 0;
-    int dbus_we = 0;
-    int dbus_addr = 0;
     int dbus_wdata = 0;
     int dbus_rdata = 0;
+    int ram_we = 0;
+    int ram_addr = 0;
+    int ram_wdata = 0;
+    int ram_mask = 0;
+
+#if MODE==VGA
+    int vga_we = 0;
+    int vga_addr = 0;
+    int vga_wdata = 0;
+
+#endif
 
     pc = pc_reg(rst, jump_flag, jump_addr);
     jump_flag = 0;
@@ -79,12 +88,21 @@ void cpu(int rst, int *dbg)
 #endif
 
     dbus_wdata = rs2_rdata;
+
     lsu(ls_type, ls_addr, dbus_rdata, &dbus_wdata, &dbus_data_rd, &dbus_mask);
     
-    dbus_we = ls_write;
-    dbus_addr = ls_addr;
-
-    if(dbus_we) ram(dbus_addr, dbus_wdata, dbus_we, dbus_mask);
+    ram_we = ls_write & ((ls_addr < 0x20000000) | (ls_addr > 0x20040000));
+    ram_wdata = dbus_wdata;
+    ram_addr = ls_addr;
+    ram_mask = dbus_mask;
+    if(ram_we) ram(ram_addr, ram_wdata, ram_we, ram_mask);
+    
+#if MODE==VGA
+    vga_we = ls_write & !ram_we;
+    vga_wdata = dbus_wdata;
+    vga_addr = ls_addr;
+    if(vga_we) vga(vga_addr&0x0fffffff, vga_wdata, vga_we, vga_mem);
+#endif
 
     rd_wdata = ls_read ? dbus_data_rd : rd_wdata;
     gpr(rd, rd_we, rd_wdata, 0, 0, &rs1_rdata, &rs2_rdata, 0);

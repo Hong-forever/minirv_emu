@@ -9,11 +9,7 @@
 
 #define ROM_DEPTH 2097152
 #define RAM_DEPTH 2097152
-
-#define MEM 1
-#define SUM 2
-#define VGA 3
-#define MODE 1
+#define VGA_DEPTH 65536
 
 typedef enum {
     imm_i, imm_s, imm_b, imm_u, imm_j
@@ -37,6 +33,10 @@ typedef struct {
     int funct7;
 } dec_t;
 
+#define MEM 0
+#define SUM 1
+#define VGA 2
+#define MODE 2
 
 int sign_extend(int value, int bits);
 int extract_imm_i(int inst);
@@ -60,5 +60,9 @@ void alu(int rs1_rdata, int rs2_rdata, int imm_use, int imm, int pc, int *memory
 
 void lsu(LS_TYPE ls_type, int ls_addr, int ls_rdata, int *ls_wdata, int *dbus_data_rd, int *dbus_mask);
 
-void cpu(int rst, int *dbg);
+void cpu(int rst, int *dbg, int *vga_mem);
+
+void vga(int offset, int wdata, int we, int *addr);
+
+void display(int vga_mem[]);
 #endif

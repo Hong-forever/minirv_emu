@@ -5,7 +5,7 @@
 #elif MODE==SUM
     #define MEM_DATA "sum.data"
 #elif MODE==VGA
-    #define MEM_DATA"vga.data"
+    #define MEM_DATA "vga.data"
 #else
     #define MEM_DATA "inst.data"
 #endif
