@@ -5,6 +5,11 @@
 
 #define DEBUG 0
 
+#define MEM 0
+#define SUM 1
+#define VGA 2
+#define MODE 2
+
 #define GPR_NUM 32
 
 #define ROM_DEPTH 2097152
@@ -33,10 +38,7 @@ typedef struct {
     int funct7;
 } dec_t;
 
-#define MEM 0
-#define SUM 1
-#define VGA 2
-#define MODE 2
+
 
 int sign_extend(int value, int bits);
 int extract_imm_i(int inst);
